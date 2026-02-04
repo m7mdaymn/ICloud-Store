@@ -1,0 +1,95 @@
+{
+  "header": {
+    "search": "Search for your device...",
+    "login": "Login",
+    "logout": "Logout",
+    "wishlist": "Wishlist"
+  },
+  "nav": {
+    "home": "Home",
+    "devices": "Devices",
+    "accessories": "Accessories",
+    "categories": "Categories"
+  },
+  "home": {
+    "hero": {
+      "title": "Original Apple & Samsung Devices",
+      "subtitle": "Your trusted store in Egypt",
+      "cta": "Browse Devices"
+    },
+    "featured": "Featured Devices",
+    "latest": "Latest Devices",
+    "accessories": "Featured Accessories",
+    "categories": "Browse Categories",
+    "viewAll": "View All"
+  },
+  "common": {
+    "featured": "Featured",
+    "new": "New",
+    "used": "Used",
+    "refurbished": "Refurbished",
+    "sold": "Sold",
+    "reserved": "Reserved",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "inquireNow": "Inquire Now",
+    "installmentFrom": "Installment from",
+    "warranty": "Warranty",
+    "months": "months",
+    "noResults": "No results found",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry"
+  },
+  "filters": {
+    "title": "Filter Results",
+    "condition": "Condition",
+    "brand": "Brand",
+    "category": "Category",
+    "priceRange": "Price Range",
+    "storage": "Storage",
+    "color": "Color",
+    "clear": "Clear Filters",
+    "apply": "Apply"
+  },
+  "unit": {
+    "specifications": "Specifications",
+    "storage": "Storage",
+    "color": "Color",
+    "batteryHealth": "Battery Health",
+    "condition": "Condition",
+    "warranty": "Warranty",
+    "warrantyRemaining": "Warranty Remaining",
+    "payment": "Payment Options",
+    "cashPrice": "Cash Price",
+    "installment": "Installment",
+    "monthlyPayment": "Monthly Payment",
+    "downPayment": "Down Payment",
+    "totalAmount": "Total Amount",
+    "months": "months"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "displayName": "Display Name",
+    "phone": "Phone Number",
+    "loginButton": "Login",
+    "registerButton": "Create Account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "forgotPassword": "Forgot password?"
+  },
+  "footer": {
+    "description": "Your trusted store for original Apple and Samsung devices in Egypt. We offer the best prices with comprehensive warranty and excellent customer service.",
+    "quickLinks": "Quick Links",
+    "categories": "Categories",
+    "contact": "Contact Us",
+    "address": "Cairo, Egypt",
+    "rights": "All rights reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions"
+  }
+}

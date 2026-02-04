@@ -1,0 +1,95 @@
+{
+  "header": {
+    "search": "ابحث عن جهازك...",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "wishlist": "المفضلة"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "devices": "الأجهزة",
+    "accessories": "الإكسسوارات",
+    "categories": "التصنيفات"
+  },
+  "home": {
+    "hero": {
+      "title": "أجهزة أبل وسامسونج الأصلية",
+      "subtitle": "متجرك الموثوق في مصر",
+      "cta": "تصفح الأجهزة"
+    },
+    "featured": "أجهزة مميزة",
+    "latest": "أحدث الأجهزة",
+    "accessories": "إكسسوارات مميزة",
+    "categories": "تصفح التصنيفات",
+    "viewAll": "عرض الكل"
+  },
+  "common": {
+    "featured": "مميز",
+    "new": "جديد",
+    "used": "مستعمل",
+    "refurbished": "مجدد",
+    "sold": "تم البيع",
+    "reserved": "محجوز",
+    "inStock": "متوفر",
+    "outOfStock": "غير متوفر",
+    "inquireNow": "استفسر الآن",
+    "installmentFrom": "قسط من",
+    "warranty": "ضمان",
+    "months": "شهر",
+    "noResults": "لا توجد نتائج",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "retry": "إعادة المحاولة"
+  },
+  "filters": {
+    "title": "تصفية النتائج",
+    "condition": "الحالة",
+    "brand": "العلامة التجارية",
+    "category": "التصنيف",
+    "priceRange": "نطاق السعر",
+    "storage": "السعة التخزينية",
+    "color": "اللون",
+    "clear": "مسح الفلاتر",
+    "apply": "تطبيق"
+  },
+  "unit": {
+    "specifications": "المواصفات",
+    "storage": "السعة التخزينية",
+    "color": "اللون",
+    "batteryHealth": "صحة البطارية",
+    "condition": "الحالة",
+    "warranty": "الضمان",
+    "warrantyRemaining": "المتبقي من الضمان",
+    "payment": "خيارات الدفع",
+    "cashPrice": "السعر نقداً",
+    "installment": "التقسيط",
+    "monthlyPayment": "القسط الشهري",
+    "downPayment": "المقدم",
+    "totalAmount": "المبلغ الإجمالي",
+    "months": "أشهر"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "displayName": "الاسم",
+    "phone": "رقم الهاتف",
+    "loginButton": "دخول",
+    "registerButton": "إنشاء حساب",
+    "noAccount": "ليس لديك حساب؟",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "forgotPassword": "نسيت كلمة المرور؟"
+  },
+  "footer": {
+    "description": "متجرك الموثوق لأجهزة أبل وسامسونج الأصلية في مصر. نوفر لك أفضل الأسعار مع ضمان شامل وخدمة عملاء متميزة.",
+    "quickLinks": "روابط سريعة",
+    "categories": "التصنيفات",
+    "contact": "تواصل معنا",
+    "address": "القاهرة، مصر",
+    "rights": "جميع الحقوق محفوظة",
+    "privacy": "سياسة الخصوصية",
+    "terms": "الشروط والأحكام"
+  }
+}

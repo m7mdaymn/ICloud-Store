@@ -1,0 +1,267 @@
+# ===================================
+# .NET / C# Backend
+# ===================================
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+publish/
+
+## Visual Studio cache/options
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+## Build Results
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+## NuGet Packages
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ===================================
+# Angular Frontend
+# ===================================
+
+## Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+## Build outputs
+dist/
+dist-ssr/
+tmp/
+out-tsc/
+bazel-out/
+
+## Angular cache
+.angular/
+.sass-cache/
+connect.lock
+coverage/
+libpeerconnection.log
+testem.log
+typings/
+
+## IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# ===================================
+# Environment & Config Files
+# ===================================
+
+## IMPORTANT: Do NOT ignore these in this project
+## They are committed with placeholder values
+# environment.ts
+# environment.prod.ts
+# appsettings.json
+# appsettings.Production.json
+# appsettings.Development.json
+
+## But ignore local overrides if you create them
+*.local.json
+.env
+.env.local
+.env.production.local
+.env.development.local
+
+# ===================================
+# Operating System Files
+# ===================================
+
+## Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+## macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+## Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===================================
+# Uploads & User Content
+# ===================================
+
+## Backend uploads (except sample/seed images)
+backend/src/ICloudStore.API/wwwroot/uploads/**/*
+!backend/src/ICloudStore.API/wwwroot/uploads/.gitkeep
+
+# Keep the folder structure
+!backend/src/ICloudStore.API/wwwroot/uploads/
+!backend/src/ICloudStore.API/wwwroot/uploads/brands/
+!backend/src/ICloudStore.API/wwwroot/uploads/categories/
+!backend/src/ICloudStore.API/wwwroot/uploads/products/
+!backend/src/ICloudStore.API/wwwroot/uploads/units/
+
+# ===================================
+# Deployment Files
+# ===================================
+
+## Keep deployment archives out of repo
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+## Publish profiles (can contain sensitive data)
+backend/src/ICloudStore.API/Properties/PublishProfiles/
+
+# ===================================
+# Database & Data Files
+# ===================================
+
+## SQLite databases (if using for development)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+## SQL Server data files
+*.mdf
+*.ldf
+
+# ===================================
+# Logs & Temporary Files
+# ===================================
+
+*.log
+*.log.*
+logs/
+*.tmp
+*.temp
+*.cache
+
+# ===================================
+# Documentation Build Output
+# ===================================
+
+docs/_build/
+docs/.doctrees/
+
+# ===================================
+# Test Coverage & Reports
+# ===================================
+
+coverage/
+*.coverage
+*.coveragexml
+TestResults/
+.testcoverage/
+
+# ===================================
+# Package Manager Locks (Optional)
+# ===================================
+
+## Uncomment if you want to ignore lock files
+## (Not recommended for production apps)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ===================================
+# Misc
+# ===================================
+
+*.swp
+*.swo
+*.bak
+*.orig
+.idea_modules/
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
