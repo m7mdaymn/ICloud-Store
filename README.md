@@ -660,4 +660,3 @@ For technical support, contact the development team.
 
 ---
 
-**Built with ❤️ for the Egyptian market**
