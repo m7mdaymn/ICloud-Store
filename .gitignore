@@ -266,16 +266,3 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-check-vercel.ps1
-DEPLOYMENT_CHECKLIST.md
-DEPLOYMENT_GUIDE.md
-GIT_WORKFLOW.md
-PUBLISH_STEPS.md
-QUICK_PUBLISH.md
-VERCEL_COMPLETE_SETUP.md
-VERCEL_DEPLOY.md
-VERCEL_FINAL_SOLUTION.md
-VERCEL_FINAL_SOLUTION.md
-verify-deployment.ps1
-verfiy-deployment.ps1
-VERCEL_DEPLOYMENT.md
