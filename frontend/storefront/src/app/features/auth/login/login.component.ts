@@ -110,6 +110,7 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
+    // Validation
     if (!this.email || !this.password) {
       this.errorMessage.set(
         this.languageService.isArabic() 
@@ -119,18 +120,39 @@ export class LoginComponent {
       return;
     }
 
+    // Email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(this.email)) {
+      this.errorMessage.set(
+        this.languageService.isArabic() 
+          ? 'البريد الإلكتروني غير صالح' 
+          : 'Invalid email address'
+      );
+      return;
+    }
+
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
-    this.authService.login({ email: this.email, password: this.password }).subscribe(response => {
+    this.authService.login({ 
+      email: this.email, 
+      password: this.password 
+    }).subscribe(response => {
       this.isLoading.set(false);
+      
       if (response.success) {
-        this.router.navigate(['/', this.languageService.currentLanguage()]);
+        // Redirect based on user role
+        const user = this.authService.currentUser();
+        if (user?.role === 'Admin' || user?.role === 'Staff') {
+          this.router.navigate(['/', this.languageService.currentLanguage(), 'admin']);
+        } else {
+          this.router.navigate(['/', this.languageService.currentLanguage()]);
+        }
       } else {
         this.errorMessage.set(
           response.message || (this.languageService.isArabic() 
-            ? 'فشل تسجيل الدخول' 
-            : 'Login failed')
+            ? 'فشل تسجيل الدخول. يرجى التحقق من بيانات الدخول' 
+            : 'Login failed. Please check your credentials')
         );
       }
     });

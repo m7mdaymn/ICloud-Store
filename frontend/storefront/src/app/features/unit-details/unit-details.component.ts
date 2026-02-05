@@ -34,7 +34,7 @@ import { UnitService, Unit } from '@core/services/unit.service';
                   [alt]="languageService.isArabic() ? unit()!.titleAr : unit()!.titleEn"
                   class="w-full h-full object-contain">
               </div>
-              @if (unit()!.media && unit()!.media.length > 1) {
+              @if (unit()!.media && unit()!.media!.length > 1) {
                 <div class="flex gap-2 overflow-x-auto pb-2">
                   @for (media of unit()!.media; track media.id) {
                     <button 

@@ -1,14 +1,41 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
-import { environment } from '@env/environment';
+import { Observable, map, catchError, of } from 'rxjs';
+import { API_ENDPOINTS } from '@core/constant/api-endpoint';
+// API Response wrapper
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+}
+
+// Product interfaces
+export interface Product {
+  id: number;
+  nameAr: string;
+  nameEn: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  slug: string;
+  brandId?: number;
+  brandName?: string;
+  categoryId?: number;
+  categoryName?: string;
+  isFeatured: boolean;
+  isActive: boolean;
+  primaryImageUrl?: string;
+  media?: ProductMedia[];
+  attributes?: ProductAttribute[];
+  stock?: ProductStock;
+  paymentInfo?: PaymentInfo;
+}
 
 export interface ProductMedia {
   id: number;
   url: string;
-  type: 'Image' | 'Video';
-  isPrimary: boolean;
-  displayOrder: number;
+  fileName: string;
+  isCover: boolean;
+  sortOrder: number;
 }
 
 export interface ProductAttribute {
@@ -17,20 +44,16 @@ export interface ProductAttribute {
   nameEn: string;
   valueAr: string;
   valueEn: string;
+  sortOrder: number;
 }
 
-export interface InstallmentPlan {
-  id: number;
-  months: number;
-  monthlyAmount: number;
-  downPayment: number;
-  totalAmount: number;
-  adminFees?: number;
-  provider?: string;
+export interface ProductStock {
+  isInStock: boolean;
+  quantity?: number;
+  lowStockThreshold?: number;
 }
 
-export interface ProductPaymentInfo {
-  id: number;
+export interface PaymentInfo {
   cashPrice: number;
   originalPrice?: number;
   discountPercentage?: number;
@@ -38,60 +61,11 @@ export interface ProductPaymentInfo {
   installmentPlans: InstallmentPlan[];
 }
 
-export interface ProductStock {
+export interface InstallmentPlan {
   id: number;
-  sku: string;
-  quantity: number;
-  lowStockThreshold: number;
-  isInStock: boolean;
-}
-
-export interface Product {
-  id: number;
-  nameAr: string;
-  nameEn: string;
-  descriptionAr?: string;
-  descriptionEn?: string;
-  slug: string;
-  
-  // Classification
-  categoryIds: number[];
-  brandId: number;
-  categoryNames?: string[];
-  brandName?: string;
-  
-  // Stock
-  stock?: ProductStock;
-  
-  // Media
-  primaryImageUrl?: string;
-  media: ProductMedia[];
-  
-  // Attributes
-  attributes: ProductAttribute[];
-  
-  // Payment
-  paymentInfo?: ProductPaymentInfo;
-  
-  // Meta
-  isActive: boolean;
-  isFeatured: boolean;
-  viewCount: number;
-  createdAt: string;
-}
-
-export interface ProductFilter {
-  categoryId?: number;
-  brandId?: number;
-  minPrice?: number;
-  maxPrice?: number;
-  search?: string;
-  isFeatured?: boolean;
-  inStock?: boolean;
-  page?: number;
-  pageSize?: number;
-  sortBy?: string;
-  sortDesc?: boolean;
+  months: number;
+  monthlyAmount: number;
+  downPayment?: number;
 }
 
 export interface PagedResult<T> {
@@ -104,10 +78,13 @@ export interface PagedResult<T> {
   hasPreviousPage: boolean;
 }
 
-export interface ApiResponse<T> {
-  success: boolean;
-  message?: string;
-  data?: T;
+export interface ProductFilter {
+  page?: number;
+  pageSize?: number;
+  categoryId?: number;
+  brandId?: number;
+  inventoryMode?: string;
+  includeInactive?: boolean;
 }
 
 @Injectable({
@@ -115,42 +92,171 @@ export interface ApiResponse<T> {
 })
 export class ProductService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/Products`;
 
-  getProducts(filter?: ProductFilter): Observable<PagedResult<Product>> {
+  /**
+   * Get product by ID
+   */
+  getProductById(id: number): Observable<Product | null> {
+    return this.http.get<ApiResponse<Product>>(
+      API_ENDPOINTS.products.getById(id)
+    ).pipe(
+      map(response => {
+        if (response.success && response.data) {
+          return response.data;
+        }
+        return null;
+      }),
+      catchError(error => {
+        console.error('Error fetching product:', error);
+        return of(null);
+      })
+    );
+  }
+
+  /**
+   * Get product by slug
+   */
+  getProductBySlug(slug: string, lang: string = 'en'): Observable<Product | null> {
+    const params = new HttpParams().set('lang', lang);
+    
+    return this.http.get<ApiResponse<Product>>(
+      API_ENDPOINTS.products.getBySlug(slug),
+      { params }
+    ).pipe(
+      map(response => {
+        if (response.success && response.data) {
+          return response.data;
+        }
+        return null;
+      }),
+      catchError(error => {
+        console.error('Error fetching product by slug:', error);
+        return of(null);
+      })
+    );
+  }
+
+  /**
+   * Get all products with filters
+   */
+  getProducts(filters: ProductFilter): Observable<PagedResult<Product>> {
     let params = new HttpParams();
     
-    if (filter) {
-      Object.entries(filter).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== '') {
-          params = params.set(key, value.toString());
+    if (filters.page) params = params.set('page', filters.page.toString());
+    if (filters.pageSize) params = params.set('pageSize', filters.pageSize.toString());
+    if (filters.categoryId) params = params.set('categoryId', filters.categoryId.toString());
+    if (filters.brandId) params = params.set('brandId', filters.brandId.toString());
+    if (filters.inventoryMode) params = params.set('inventoryMode', filters.inventoryMode);
+    if (filters.includeInactive) params = params.set('includeInactive', 'true');
+
+    return this.http.get<ApiResponse<PagedResult<Product>>>(
+      API_ENDPOINTS.products.getAll,
+      { params }
+    ).pipe(
+      map(response => {
+        if (response.success && response.data) {
+          return response.data;
         }
-      });
-    }
-
-    return this.http.get<ApiResponse<PagedResult<Product>>>(this.apiUrl, { params }).pipe(
-      map(response => response.data || { items: [], totalCount: 0, page: 1, pageSize: 12, totalPages: 0, hasNextPage: false, hasPreviousPage: false })
+        return this.getEmptyPagedResult(filters.page || 1, filters.pageSize || 12);
+      }),
+      catchError(error => {
+        console.error('Error fetching products:', error);
+        return of(this.getEmptyPagedResult(filters.page || 1, filters.pageSize || 12));
+      })
     );
   }
 
-  getProductById(id: number): Observable<Product | null> {
-    return this.http.get<ApiResponse<Product>>(`${this.apiUrl}/${id}`).pipe(
-      map(response => response.data || null)
+  /**
+   * Search products
+   */
+  searchProducts(query: string, page: number = 1, pageSize: number = 20): Observable<PagedResult<Product>> {
+    // Assuming your backend supports search via query parameter
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString())
+      .set('search', query);
+
+    return this.http.get<ApiResponse<PagedResult<Product>>>(
+      API_ENDPOINTS.products.getAll,
+      { params }
+    ).pipe(
+      map(response => response.success && response.data ? response.data : this.getEmptyPagedResult(page, pageSize)),
+      catchError(() => of(this.getEmptyPagedResult(page, pageSize)))
     );
   }
 
-  getFeaturedProducts(limit: number = 8): Observable<Product[]> {
-    return this.getProducts({ isFeatured: true, pageSize: limit }).pipe(
-      map(result => result.items)
+  /**
+   * Get featured products
+   */
+  getFeaturedProducts(limit: number = 4): Observable<Product[]> {
+    const params = new HttpParams()
+      .set('page', '1')
+      .set('pageSize', limit.toString());
+
+    return this.http.get<ApiResponse<PagedResult<Product>>>(
+      API_ENDPOINTS.products.getAll,
+      { params }
+    ).pipe(
+      map(response => {
+        if (response.success && response.data) {
+          // Filter featured or return first items
+          const featured = response.data.items.filter(p => p.isFeatured);
+          return featured.length > 0 ? featured.slice(0, limit) : response.data.items.slice(0, limit);
+        }
+        return [];
+      }),
+      catchError(() => of([]))
     );
   }
 
-  getAccessories(page: number = 1, pageSize: number = 12): Observable<PagedResult<Product>> {
-    // Accessories category ID - this would typically come from the backend
-    return this.getProducts({ page, pageSize });
+  /**
+   * Get product stock
+   */
+  getProductStock(id: number): Observable<ProductStock | null> {
+    return this.http.get<ApiResponse<ProductStock>>(
+      API_ENDPOINTS.products.stock.get(id)
+    ).pipe(
+      map(response => response.success ? response.data : null),
+      catchError(() => of(null))
+    );
   }
 
-  searchProducts(query: string, page: number = 1, pageSize: number = 12): Observable<PagedResult<Product>> {
-    return this.getProducts({ search: query, page, pageSize });
+  /**
+   * Get product attributes
+   */
+  getProductAttributes(id: number): Observable<ProductAttribute[]> {
+    return this.http.get<ApiResponse<ProductAttribute[]>>(
+      API_ENDPOINTS.products.attributes.getAll(id)
+    ).pipe(
+      map(response => response.success && response.data ? response.data : []),
+      catchError(() => of([]))
+    );
+  }
+
+  /**
+   * Get product payment info
+   */
+  getProductPaymentInfo(id: number): Observable<PaymentInfo | null> {
+    return this.http.get<ApiResponse<PaymentInfo>>(
+      API_ENDPOINTS.products.paymentInfo.get(id)
+    ).pipe(
+      map(response => response.success ? response.data : null),
+      catchError(() => of(null))
+    );
+  }
+
+  /**
+   * Helper method to return empty paged result
+   */
+  private getEmptyPagedResult(page: number, pageSize: number): PagedResult<Product> {
+    return {
+      items: [],
+      totalCount: 0,
+      page,
+      pageSize,
+      totalPages: 0,
+      hasNextPage: false,
+      hasPreviousPage: false
+    };
   }
 }

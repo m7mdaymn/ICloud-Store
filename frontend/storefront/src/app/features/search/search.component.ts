@@ -140,14 +140,15 @@ export class SearchComponent implements OnInit {
     this.hasSearched.set(true);
 
     // Search units
-    this.unitService.searchUnits(this.searchQuery, 1, 20).subscribe(result => {
+    this.unitService['searchUnits'](this.searchQuery, 1, 20).subscribe((result: { items: Unit[]; }) => {
       this.units.set(result.items);
       this.isLoading.set(false);
     });
 
     // Search products
-    this.productService.searchProducts(this.searchQuery, 1, 20).subscribe(result => {
+    (this.productService.searchProducts(this.searchQuery, 1, 20) as any).subscribe((result: { items: Product[]; }) => {
       this.products.set(result.items);
+      this.isLoading.set(false);
     });
   }
 }

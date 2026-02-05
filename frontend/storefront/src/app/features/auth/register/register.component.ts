@@ -37,28 +37,15 @@ import { AuthService } from '@core/services/auth.service';
           <form (ngSubmit)="onSubmit()" class="space-y-5">
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {{ languageService.isArabic() ? 'الاسم بالعربية' : 'Name (Arabic)' }}
+                {{ languageService.isArabic() ? 'الاسم الكامل' : 'Full Name' }}
               </label>
               <input 
                 type="text" 
-                [(ngModel)]="displayNameAr"
-                name="displayNameAr"
+                [(ngModel)]="fullName"
+                name="fullName"
                 required
                 class="input-field"
                 [placeholder]="languageService.isArabic() ? 'أحمد محمد' : 'Ahmed Mohamed'">
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {{ languageService.isArabic() ? 'الاسم بالإنجليزية' : 'Name (English)' }}
-              </label>
-              <input 
-                type="text" 
-                [(ngModel)]="displayNameEn"
-                name="displayNameEn"
-                required
-                class="input-field"
-                placeholder="Ahmed Mohamed">
             </div>
 
             <div>
@@ -82,6 +69,7 @@ import { AuthService } from '@core/services/auth.service';
                 type="tel" 
                 [(ngModel)]="phoneNumber"
                 name="phoneNumber"
+                required
                 class="input-field"
                 placeholder="+20 100 000 0000">
             </div>
@@ -148,8 +136,7 @@ export class RegisterComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  displayNameAr = '';
-  displayNameEn = '';
+  fullName = '';
   email = '';
   phoneNumber = '';
   password = '';
@@ -165,7 +152,8 @@ export class RegisterComponent {
   }
 
   onSubmit(): void {
-    if (!this.displayNameAr || !this.displayNameEn || !this.email || !this.password) {
+    // Validation
+    if (!this.fullName || !this.email || !this.phoneNumber || !this.password) {
       this.errorMessage.set(
         this.languageService.isArabic() 
           ? 'يرجى ملء جميع الحقول المطلوبة' 
@@ -192,15 +180,26 @@ export class RegisterComponent {
       return;
     }
 
+    // Email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(this.email)) {
+      this.errorMessage.set(
+        this.languageService.isArabic() 
+          ? 'البريد الإلكتروني غير صالح' 
+          : 'Invalid email address'
+      );
+      return;
+    }
+
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
     this.authService.register({
-      displayNameAr: this.displayNameAr,
-      displayNameEn: this.displayNameEn,
+      fullName: this.fullName,
       email: this.email,
+      phoneNumber: this.phoneNumber,
       password: this.password,
-      phoneNumber: this.phoneNumber || undefined
+      confirmPassword: this.confirmPassword
     }).subscribe(response => {
       this.isLoading.set(false);
       if (response.success) {

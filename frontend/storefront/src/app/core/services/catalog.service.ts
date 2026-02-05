@@ -59,11 +59,11 @@ export class CatalogService {
     );
   }
 
-  getCategoryById(id: number): Observable<Category | null> {
-    return this.http.get<ApiResponse<Category>>(`${this.apiUrl}/Categories/${id}`).pipe(
-      map(response => response.data || null)
-    );
-  }
+  // getCategoryById(id: number): Observable<Category | null> {
+  //   return this.http.get<ApiResponse<Category>>(`${this.apiUrl}/Categories/${id}`).pipe(
+  //     map(response => response.data || null)ٍٍ
+  //   );
+  // }
 
   // Brands
   getBrands(): Observable<Brand[]> {

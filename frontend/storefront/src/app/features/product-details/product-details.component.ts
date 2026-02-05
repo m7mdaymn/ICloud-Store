@@ -32,7 +32,7 @@ import { ProductService, Product } from '@core/services/product.service';
                   [alt]="languageService.isArabic() ? product()!.nameAr : product()!.nameEn"
                   class="w-full h-full object-contain">
               </div>
-              @if (product()!.media && product()!.media.length > 1) {
+              @if (product()!.media && product()!.media!.length > 1) {
                 <div class="flex gap-2 overflow-x-auto pb-2">
                   @for (media of product()!.media; track media.id) {
                     <button 
@@ -87,13 +87,13 @@ import { ProductService, Product } from '@core/services/product.service';
               }
 
               <!-- Price -->
-              @if (product()!.paymentInfo) {
+              @if (product()?.paymentInfo) {
                 <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
                   <h3 class="font-semibold text-gray-900 dark:text-white mb-4">
                     {{ 'unit.payment' | translate }}
                   </h3>
                   
-                  @if (product()!.paymentInfo!.originalPrice && product()!.paymentInfo!.originalPrice! > product()!.paymentInfo!.cashPrice) {
+                  @if (product()?.paymentInfo?.originalPrice && product()?.paymentInfo?.originalPrice! > product()?.paymentInfo?.cashPrice!) {
                     <div class="flex items-center gap-3 mb-2">
                       <span class="price-original text-lg">
                         {{ product()!.paymentInfo!.originalPrice | number:'1.0-0' }} {{ languageService.isArabic() ? 'ج.م' : 'EGP' }}
@@ -105,20 +105,20 @@ import { ProductService, Product } from '@core/services/product.service';
                   }
                   
                   <div class="text-4xl font-bold text-primary-600 dark:text-primary-400">
-                    {{ product()!.paymentInfo!.cashPrice | number:'1.0-0' }} 
+                    {{ product()?.paymentInfo?.cashPrice | number:'1.0-0' }} 
                     <span class="text-lg">{{ languageService.isArabic() ? 'ج.م' : 'EGP' }}</span>
                   </div>
                 </div>
               }
 
               <!-- Attributes -->
-              @if (product()!.attributes && product()!.attributes.length > 0) {
+              @if (product()?.attributes && product()!.attributes!.length > 0) {
                 <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
                   <h3 class="font-semibold text-gray-900 dark:text-white mb-4">
                     {{ 'unit.specifications' | translate }}
                   </h3>
                   <div class="space-y-3">
-                    @for (attr of product()!.attributes; track attr.id) {
+                    @for (attr of product()?.attributes!; track attr.id) {
                       <div class="flex justify-between">
                         <span class="text-gray-500 dark:text-gray-400">
                           {{ languageService.isArabic() ? attr.nameAr : attr.nameEn }}

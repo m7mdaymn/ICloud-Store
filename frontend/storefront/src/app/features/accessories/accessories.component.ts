@@ -9,7 +9,7 @@ import { ProductCardComponent } from '@shared/components/product-card/product-ca
 @Component({
   selector: 'app-accessories',
   standalone: true,
-  imports: [CommonModule, TranslateModule, ProductCardComponent],
+  imports: [CommonModule, RouterLink, TranslateModule, ProductCardComponent],
   template: `
     <div class="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <div class="bg-white dark:bg-gray-800 border-b dark:border-gray-700 py-8">
@@ -107,9 +107,20 @@ export class AccessoriesComponent implements OnInit {
 
   private loadProducts(): void {
     this.isLoading.set(true);
-    this.productService.getAccessories(this.currentPage(), 12).subscribe(result => {
-      this.result.set(result);
-      this.isLoading.set(false);
+    
+    // Get all products with pagination
+    this.productService.getProducts({
+      page: this.currentPage(),
+      pageSize: 12
+    }).subscribe({
+      next: (result) => {
+        this.result.set(result);
+        this.isLoading.set(false);
+      },
+      error: (error) => {
+        console.error('Error loading products:', error);
+        this.isLoading.set(false);
+      }
     });
   }
 
