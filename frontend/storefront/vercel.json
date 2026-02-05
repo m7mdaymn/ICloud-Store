@@ -1,5 +1,18 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/storefront/browser",
+  "env": {
+    "NODE_ENV": "production",
+    "NG_BUILD_PROD": "true"
+  },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/(.*)",
+      "destination": "https://icloudstore.runasp.net/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
